@@ -1,54 +1,88 @@
-element.style {
-}
-:host, :root {
-    --fa-style-family-classic: "Font Awesome 6 Free";
-    --fa-font-solid: normal 900 1em / 1 "Font Awesome 6 Free";
-}
-:host, :root {
-    --fa-font-regular: normal 400 1em / 1 "Font Awesome 6 Free";
-}
-:host, :root {
-    --fa-style-family-brands: "Font Awesome 6 Brands";
-    --fa-font-brands: normal 400 1em / 1 "Font Awesome 6 Brands";
-}
-:root {
-    --bg-color: #d1cfcd3c;
-    --text-color: #5D4037;
-    --primary-accent: #947A6D;
-    --secondary-accent: #A1887F;
-    --soft-glow: rgba(148, 122, 109, 0.35);
-    --border-color: #D7CCC8;
-    --input-bg: #FAF6F3;
-    --button-text-color: #f9f6f4;
-    --font-brand: 'Rozha One', serif;
-    --font-primary: 'Poppins', sans-serif;
-    --font-secondary: 'Nunito', sans-serif;
-    --facebook-color: #1877F2;
-    --instagram-color-start: #fd1d1d;
-    --instagram-color-end: #fcb045;
-    --linkedin-color: #0077B5;
-    --pinterest-color: #E60023;
-}
-html, body {
-    height: 100%;
-    font-family: var(--font-primary);
-    color: var(--text-color);
-    overflow-x: hidden;
-    cursor: none;
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-html[Attributes Style] {
-    -webkit-locale: "en";
-}
-user agent stylesheet
-:root {
-    view-transition-name: root;
-}
-user agent stylesheet
-html {
-    display: block;
-}
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>thedayread - Coming Soon</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&amp;family=Nunito:wght@300;400;600&amp;family=Rozha+One&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" style="opacity: 0; visibility: hidden; display: none;">
+        <div class="loader-content">
+            <div class="logo-text">thedayread</div> 
+            <div class="dots-container">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="main-content" style="display: block;">
+        <!-- Custom Cursor Dot -->
+        <div id="custom-cursor" style="left: 1347px; top: 103px; transform: translate(-50%, -50%) scale(1);"></div>
+        <div id="cursor-ripple" style="left: 1347px; top: 103px; animation: 0.5s ease-out 0s 1 normal none running rippleEffect;"></div>
+
+        <header>
+            
+            <img src="logo.png" alt="thedayread Logo" class="header-logo">
+            <h2 class="coming-soon-text">COMING SOON</h2>
+        </header>
+
+        <section class="newsletter-section">
+            <div class="input-group">
+                <input type="email" id="emailInput" placeholder="Your email for mindful updates">
+                <button id="subscribeButton">Subscribe</button>
+            </div>
+            <p id="subscribeMessage"></p>
+        </section>
+
+        <section class="social-media-section">
+            <ul>
+                <li>
+    <a href="https://www.linkedin.com/company/thedayread/" class="social-link linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-linkedin-in"></i>
+        <span class="platform-name">LinkedIn</span>
+    </a>
+</li>
+<li>
+    <a href="https://instagram.com/thedayread" class="social-link instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram"></i>
+        <span class="platform-name">Instagram</span>
+    </a>
+</li>
+<li>
+    <a href="https://in.pinterest.com/thedayread/" class="social-link pinterest" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-pinterest-p"></i>
+        <span class="platform-name">Pinterest</span>
+    </a>
+</li>
+<li>
+    <a href="https://www.facebook.com/profile.php?id=61575855581125" class="social-link facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        <span class="platform-name">Facebook</span>
+    </a>
+</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>thedayread — Journaling Your Mental Wellness Journey</p>
+        </footer>
+        <!-- Bottom Bar -->
+<div class="bottom-bar" id="bottom-bar-content">
+        <a href="tel:+919831955741" class="contact-item phone-number">
+            <i class="fas fa-phone-alt icon"></i>9831955741
+        </a>
+        <p class="quote-text">insight-within-sight.</p>
+        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=info@thedayread.in&amp;su=Hello%20There&amp;body=I%20would%20like%20to%20talk%20about..." target="_blank" class="contact-item email-address">
+            <i class="fas fa-envelope icon"></i>@thedayread.in
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+
+</div></body></html>
