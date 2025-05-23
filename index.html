@@ -1,88 +1,731 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>thedayread - Coming Soon</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&amp;family=Nunito:wght@300;400;600&amp;family=Rozha+One&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Nunito:wght@300;400;600&family=Rozha+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body class="">
+    <style>
+        :root {
+            --bg-color: #d1cfcd3c;
+            --text-color: #5D4037;
+            --primary-accent: #947A6D;
+            --secondary-accent: #A1887F;
+            --soft-glow: rgba(148, 122, 109, 0.35);
+            --border-color: #D7CCC8;
+            --input-bg: #FAF6F3;
+            --button-text-color: #f9f6f4;
 
-    <!-- Loading Screen -->
-    <div id="loading-screen" style="opacity: 0; visibility: hidden; display: none;">
-        <div class="loader-content">
-            <div class="logo-text">thedayread</div> 
-            <div class="dots-container">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
+            --font-brand: 'Rozha One', serif;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Nunito', sans-serif;
+
+            --facebook-color: #1877F2;
+            --instagram-color-start: #fd1d1d;
+            --instagram-color-end: #fcb045;
+            --linkedin-color: #0077B5;
+            --pinterest-color: #E60023;
+        }
+
+        @font-face {
+            font-family: rozah;
+            src: url(./RozhaOne-Regular.ttf);
+        }
+
+        @font-face {
+            font-family: ques;
+            src: url(./Questrial-Regular.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: var(--font-primary);
+            color: var(--text-color);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        /* Text logo for loading screen */
+        .loader-content .logo-text {
+            font-family: rozah;
+            font-size: 3.8em;
+            font-weight: 600;
+            color: var(--primary-accent);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .dots-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-accent);
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.3s; }
+        .dot:nth-child(2) { animation-delay: -0.15s; }
+        .dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes pulse {
+            0%, 80%, 100% { transform: scale(0.5); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Main Content Container */
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            width: 90%;
+            opacity: 0;
+            animation: fadeInContent 1s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInContent {
+            to { opacity: 1; }
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            width: 15px;
+            height: 15px;
+            background-color: var(--primary-accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+            opacity: 0.8;
+            box-shadow: 0 0 10px var(--soft-glow), 0 0 20px var(--soft-glow);
+        }
+
+        #cursor-ripple {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--soft-glow);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 9999;
+            opacity: 0;
+        }
+
+        body.cursor-active #custom-cursor {
+            width: 25px;
+            height: 25px;
+            background-color: var(--soft-glow);
+        }
+
+        @keyframes rippleEffect {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 2em;
+        }
+
+        /* Styles for the image logo in the header */
+        .header-logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.5em;
+        }
+
+        .coming-soon-text {
+            font-family: var(--font-primary);
+            font-size: 3.5em;
+            font-weight: 800;
+            color: var(--primary-accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            margin-bottom: 3em;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .input-group input[type="email"] {
+            flex-grow: 1;
+            padding: 15px 20px;
+            font-family: var(--font-primary);
+            font-size: 1em;
+            border: 1px solid var(--border-color);
+            border-right: none;
+            border-radius: 25px 0 0 25px;
+            outline: none;
+            transition: all 0.3s ease-out;
+            box-shadow: 0 0 0px var(--soft-glow);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .input-group input[type="email"]::placeholder {
+            color: var(--secondary-accent);
+            opacity: 0.8;
+        }
+
+        .input-group input[type="email"]:focus,
+        .input-group input[type="email"]:hover {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 10px var(--soft-glow);
+            background-color: white;
+        }
+
+        .input-group button {
+            padding: 15px 25px;
+            font-family: var(--font-primary);
+            font-size: 1em;
+            font-weight: 600;
+            border: 1px solid var(--primary-accent);
+            background-color: var(--primary-accent);
+            color: var(--button-text-color);
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+            box-shadow: 0 0 0px var(--soft-glow);
+        }
+
+        .input-group button:hover,
+        .input-group button:focus {
+            background-color: var(--text-color);
+            border-color: var(--text-color);
+            transform: scale(1.02);
+            box-shadow: 0 0 10px var(--soft-glow);
+        }
+
+        #subscribeMessage {
+            margin-top: 10px;
+            font-size: 0.9em;
+            min-height: 1.2em;
+            color: var(--primary-accent);
+        }
+
+        /* Social Media Section */
+        .social-media-section ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-media-section li .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 50px;
+            transition-property: transform, box-shadow, background-color, background-image, padding, color;
+            transition-duration: 0.35s;
+            transition-timing-function: ease-out;
+            box-shadow: 0 2px 5px rgba(93, 64, 55, 0.08);
+            border: 1px solid var(--border-color);
+            background-color: transparent;
+            color: var(--secondary-accent);
+            min-width: 48px;
+            height: 48px;
+            overflow: hidden;
+        }
+
+        .social-media-section li .social-link i {
+            font-size: 1.6em;
+            transition: transform 0.3s ease-out, color 0.3s ease-out;
+            flex-shrink: 0;
+            margin-right: 0;
+            line-height: 1;
+        }
+
+        .social-media-section li .social-link .platform-name {
+            font-size: 0.9em;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            max-width: 0;
+            margin-left: 0;
+            transform: translateX(-5px);
+            transition: opacity 0.3s ease-out 0.05s,
+            max-width 0.3s ease-out 0.05s,
+            margin-left 0.3s ease-out 0.05s,
+            transform 0.3s ease-out 0.05s,
+            color 0.3s ease-out 0.05s;
+        }
+
+        .social-media-section li .social-link:hover,
+        .social-media-section li .social-link:focus {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 6px 12px rgba(93, 64, 55, 0.12);
+            padding-left: 18px;
+            padding-right: 20px;
+            color: white !important;
+            border-color: transparent;
+        }
+
+        .social-media-section li .social-link:hover i,
+        .social-media-section li .social-link:focus i {
+            transform: scale(1.05);
+            margin-right: 8px;
+            color: white;
+        }
+
+        .social-media-section li .social-link:hover .platform-name,
+        .social-media-section li .social-link:focus .platform-name {
+            opacity: 1;
+            max-width: 100px;
+            transform: translateX(0);
+            color: white;
+        }
+
+        .social-link.facebook:hover, .social-link.facebook:focus { background-color: var(--facebook-color); }
+        .social-link.instagram:hover, .social-link.instagram:focus {
+            background-image: linear-gradient(45deg, var(--instagram-color-start), var(--instagram-color-end));
+        }
+        .social-link.linkedin:hover, .social-link.linkedin:focus { background-color: var(--linkedin-color); }
+        .social-link.pinterest:hover, .social-link.pinterest:focus { background-color: var(--pinterest-color); }
+
+        footer {
+            margin-top: 3em;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px 0;
+            font-size: 0.9em;
+            color: var(--secondary-accent);
+            border-top: 1px solid var(--border-color);
+            width: 90%;
+            max-width: 700px;
+        }
+
+        footer p {
+            font-family: var(--font-secondary);
+            font-variant: small-caps;
+        }
+
+        .bottom-bar {
+            display: flex;
+            background-color: var(--accent-color-secondary);
+            color: var(--footer-bar-text-color);
+            padding: 15px 30px;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 10px 120px;
+            margin-bottom: -90px;
+        }
+
+        .bottom-bar .contact-item {
+            color: var(--footer-bar-text-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .bottom-bar .contact-item:hover {
+            opacity: 0.8;
+        }
+
+        .bottom-bar .contact-item .icon {
+            margin-right: 8px;
+            font-size: 0.95em;
+            line-height: 1;
+        }
+
+        .bottom-bar .phone-number {
+            font-family: ques;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .bottom-bar .quote-text {
+            font-family: ques;
+            font-size: 1.3em;
+            font-weight: 400;
+            flex-grow: 1;
+            text-align: center;
+            margin: 0 10px;
+            min-width: 150px;
+        }
+
+        .bottom-bar .email-address {
+            font-family: ques;
+            font-size: 1em;
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .bottom-bar {
+                padding: 12px 20px;
+                justify-content: center;
+                gap: 8px 15px;
+            }
+
+            .bottom-bar .quote-text {
+                order: 0;
+                width: 100%;
+                margin: 5px 0;
+                min-width: unset;
+                flex-grow: 0;
+            }
+
+            .bottom-bar .contact-item,
+            .bottom-bar .quote-text {
+                font-size: 0.82em;
+            }
+
+            .bottom-bar .contact-item .icon {
+                margin-right: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bottom-bar {
+                flex-direction: column;
+                padding: 10px 15px;
+                gap: 8px;
+            }
+
+            .bottom-bar .quote-text {
+                order: 1;
+                margin: 5px 0;
+                width: auto;
+            }
+
+            .bottom-bar .phone-number {
+                order: 2;
+            }
+
+            .bottom-bar .email-address {
+                order: 3;
+            }
+
+            .bottom-bar .contact-item,
+            .bottom-bar .quote-text {
+                font-size: 0.8em;
+                margin-bottom: 5px;
+            }
+
+            .bottom-bar .contact-item:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-logo { max-width: 240px; }
+            .loader-content .logo-text { font-size: 2.2em; }
+            header .tagline { font-size: 1.1em; }
+            .coming-soon-text { font-size: 1.3em; }
+
+            .input-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .input-group input[type="email"],
+            .input-group button {
+                border-radius: 25px;
+                width: 100%;
+                border-right: 1px solid var(--border-color);
+            }
+
+            .input-group input[type="email"]:focus,
+            .input-group input[type="email"]:hover {
+                border-right: 1px solid var(--primary-accent);
+            }
+
+            .social-media-section ul { gap: 10px; }
+            .social-media-section li .social-link {
+                padding: 10px 12px;
+                min-width: 44px;
+                height: 44px;
+            }
+
+            .social-media-section li .social-link i { font-size: 1.4em; }
+        }
+
+        @media (max-width: 480px) {
+            .header-logo { max-width: 200px; }
+            .loader-content .logo-text { font-size: 1.8em; }
+            .coming-soon-text { font-size: 1.1em; letter-spacing: 1.5px; }
+            header .tagline { font-size: 1em; }
+
+            .input-group input[type="email"],
+            .input-group button {
+                font-size: 0.9em;
+                padding: 12px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading-screen">
+    <div class="loader-content">
+        <div class="logo-text">thedayread</div>
+        <div class="dots-container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
         </div>
     </div>
+</div>
 
-    <!-- Main Content -->
-    <div class="container" id="main-content" style="display: block;">
-        <!-- Custom Cursor Dot -->
-        <div id="custom-cursor" style="left: 1347px; top: 103px; transform: translate(-50%, -50%) scale(1);"></div>
-        <div id="cursor-ripple" style="left: 1347px; top: 103px; animation: 0.5s ease-out 0s 1 normal none running rippleEffect;"></div>
+<!-- Main Content -->
+<div class="container" id="main-content" style="display: none;">
+    <!-- Custom Cursor Dot -->
+    <div id="custom-cursor"></div>
+    <div id="cursor-ripple"></div>
 
-        <header>
-            
-            <img src="logo.png" alt="thedayread Logo" class="header-logo">
-            <h2 class="coming-soon-text">COMING SOON</h2>
-        </header>
+    <header>
+        <img src="https://i.postimg.cc/65f9Ky1h/logo.png" alt="thedayread Logo" class="header-logo">
+        <h2 class="coming-soon-text">COMING SOON</h2>
+    </header>
 
-        <section class="newsletter-section">
-            <div class="input-group">
-                <input type="email" id="emailInput" placeholder="Your email for mindful updates">
-                <button id="subscribeButton">Subscribe</button>
-            </div>
-            <p id="subscribeMessage"></p>
-        </section>
+    <section class="newsletter-section">
+        <div class="input-group">
+            <input type="email" id="emailInput" placeholder="Your email for mindful updates">
+            <button id="subscribeButton">Subscribe</button>
+        </div>
+        <p id="subscribeMessage"></p>
+    </section>
 
-        <section class="social-media-section">
-            <ul>
-                <li>
-    <a href="https://www.linkedin.com/company/thedayread/" class="social-link linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-linkedin-in"></i>
-        <span class="platform-name">LinkedIn</span>
-    </a>
-</li>
-<li>
-    <a href="https://instagram.com/thedayread" class="social-link instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-instagram"></i>
-        <span class="platform-name">Instagram</span>
-    </a>
-</li>
-<li>
-    <a href="https://in.pinterest.com/thedayread/" class="social-link pinterest" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-pinterest-p"></i>
-        <span class="platform-name">Pinterest</span>
-    </a>
-</li>
-<li>
-    <a href="https://www.facebook.com/profile.php?id=61575855581125" class="social-link facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-facebook-f"></i>
-        <span class="platform-name">Facebook</span>
-    </a>
-</li>
-            </ul>
-        </section>
+    <section class="social-media-section">
+        <ul>
+            <li>
+                <a href="https://www.linkedin.com/company/thedayread/" class="social-link linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span class="platform-name">LinkedIn</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://instagram.com/thedayread" class="social-link instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                    <span class="platform-name">Instagram</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://in.pinterest.com/thedayread/" class="social-link pinterest" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-pinterest-p"></i>
+                    <span class="platform-name">Pinterest</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/profile.php?id=61575855581125" class="social-link facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                    <span class="platform-name">Facebook</span>
+                </a>
+            </li>
+        </ul>
+    </section>
 
-        <footer>
-            <p>thedayread — Journaling Your Mental Wellness Journey</p>
-        </footer>
-        <!-- Bottom Bar -->
-<div class="bottom-bar" id="bottom-bar-content">
+    <footer>
+        <p>thedayread — Journaling Your Mental Wellness Journey</p>
+    </footer>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar" id="bottom-bar-content">
         <a href="tel:+919831955741" class="contact-item phone-number">
             <i class="fas fa-phone-alt icon"></i>9831955741
         </a>
         <p class="quote-text">insight-within-sight.</p>
-        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=info@thedayread.in&amp;su=Hello%20There&amp;body=I%20would%20like%20to%20talk%20about..." target="_blank" class="contact-item email-address">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@thedayread.in&su=Hello%20There&body=I%20would%20like%20to%20talk%20about..." target="_blank" class="contact-item email-address">
             <i class="fas fa-envelope icon"></i>@thedayread.in
         </a>
     </div>
+</div>
 
-    <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadingScreen = document.getElementById('loading-screen');
+        const mainContent = document.getElementById('main-content');
+        const emailInput = document.getElementById('emailInput');
+        const subscribeButton = document.getElementById('subscribeButton');
+        const subscribeMessage = document.getElementById('subscribeMessage');
+        const customCursor = document.getElementById('custom-cursor');
+        const cursorRipple = document.getElementById('cursor-ripple');
 
-</div></body></html>
+        // --- Loading Screen ---
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.visibility = 'hidden';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+            }, 800);
+        }, 2500);
+
+        // --- Newsletter Subscription ---
+        subscribeButton.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            if (email === '') {
+                subscribeMessage.textContent = 'Please enter your email.';
+                subscribeMessage.style.color = 'red';
+            } else if (!isValidEmail(email)) {
+                subscribeMessage.textContent = 'Please enter a valid email address.';
+                subscribeMessage.style.color = 'red';
+            } else {
+                subscribeMessage.textContent = 'Thank you for subscribing!';
+                subscribeMessage.style.color = 'var(--primary-accent)';
+                emailInput.value = '';
+                console.log(`Subscribed: ${email}`);
+                // Consider actually sending this email to a backend or service here
+            }
+            setTimeout(() => {
+                subscribeMessage.textContent = '';
+            }, 3000);
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // --- Custom Cursor ---
+        let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', (e) => {
+                customCursor.style.left = e.clientX + 'px';
+                customCursor.style.top = e.clientY + 'px';
+                cursorRipple.style.left = e.clientX + 'px';
+                cursorRipple.style.top = e.clientY + 'px';
+            });
+
+            document.addEventListener('mousedown', () => {
+                customCursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+                cursorRipple.style.animation = 'none';
+                void cursorRipple.offsetWidth; // Trigger reflow to restart animation
+                cursorRipple.style.animation = 'rippleEffect 0.5s ease-out';
+            });
+
+            document.addEventListener('mouseup', () => {
+                customCursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+
+            const interactiveElements = document.querySelectorAll('a, button, input[type="email"]');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+            });
+
+        } else {
+            customCursor.style.display = 'none';
+            cursorRipple.style.display = 'none';
+            document.body.style.cursor = 'auto'; // Restore default cursor for touch devices
+        }
+
+        // --- Touch Interaction Ripple for mobile ---
+        if (isTouchDevice) {
+            document.body.addEventListener('touchstart', function(e) {
+                let ripple = document.createElement('span');
+                ripple.classList.add('touch-ripple-effect');
+                document.body.appendChild(ripple);
+
+                let size = Math.max(document.body.clientWidth, document.body.clientHeight) * 2;
+                ripple.style.width = ripple.style.height = size + 'px';
+                // Ensure pageX and pageY are available on the touch event
+                if (e.touches && e.touches.length > 0) {
+                    ripple.style.left = (e.touches[0].pageX - size / 2) + 'px';
+                    ripple.style.top = (e.touches[0].pageY - size / 2) + 'px';
+                } else { // Fallback if touch coordinates are not directly on e
+                    ripple.style.left = (e.pageX - size / 2) + 'px';
+                    ripple.style.top = (e.pageY - size / 2) + 'px';
+                }
+
+                ripple.addEventListener('animationend', () => {
+                    ripple.remove();
+                });
+            }, {passive: true});
+
+            // Dynamically add styles for touch ripple to keep CSS cleaner
+            const styleSheet = document.createElement("style");
+            styleSheet.type = "text/css";
+            styleSheet.innerText =
+                `.touch-ripple-effect {
+                    position: absolute;
+                    border-radius: 50%;
+                    background-color: rgba(195, 174, 214, 0.3);
+                    transform: scale(0);
+                    animation: mobileRipple 0.6s linear;
+                    pointer-events: none;
+                    z-index: 9990;
+                }
+                @keyframes mobileRipple {
+                    to {
+                        transform: scale(1);
+                        opacity: 0;
+                    }
+                }`;
+            document.head.appendChild(styleSheet);
+        }
+    });
+</script>
+
+</body>
+</html>
