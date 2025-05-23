@@ -6,16 +6,16 @@
     <title>thedayread - Coming Soon</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Nunito:wght@300;400;600&family=Rozha+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="https://i.postimg.cc/7h0p9WZ0/Untitled-25.png" type="image/png">
     <style>
         :root {
             --bg-color: #d1cfcd3c;
             --text-color: #5D4037;
             --primary-accent: #947A6D;
-            --secondary-accent: #A1887F;
             --soft-glow: rgba(148, 122, 109, 0.35);
             --border-color: #D7CCC8;
             --input-bg: #FAF6F3;
-            --button-text-color: #f9f6f4;
+            --button-text-color: #f9f6f4; /* This is for the subscribe button text */
 
             --font-brand: 'Rozha One', serif;
             --font-primary: 'Poppins', sans-serif;
@@ -123,7 +123,7 @@
             width: 90%;
             opacity: 0;
             animation: fadeInContent 1s ease-in-out forwards;
-            animation-delay: 0.5s;
+            animation-delay: 0.5s; /* Should be less than or equal to JS mainContent display delay */
         }
 
         @keyframes fadeInContent {
@@ -365,8 +365,8 @@
 
         .bottom-bar {
             display: flex;
-            background-color: var(--accent-color-secondary);
-            color: var(--footer-bar-text-color);
+            background-color: var(--secondary-accent);
+            color: #5d4037; /* CHANGED: Text color for the bottom bar */
             padding: 15px 30px;
             justify-content: space-between;
             align-items: center;
@@ -378,7 +378,7 @@
         }
 
         .bottom-bar .contact-item {
-            color: var(--footer-bar-text-color);
+            color: #5d4037; /* CHANGED: Text color for contact items */
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -410,6 +410,7 @@
             text-align: center;
             margin: 0 10px;
             min-width: 150px;
+            /* Color will be inherited from .bottom-bar (black) */
         }
 
         .bottom-bar .email-address {
@@ -478,7 +479,6 @@
         @media (max-width: 768px) {
             .header-logo { max-width: 240px; }
             .loader-content .logo-text { font-size: 2.2em; }
-            header .tagline { font-size: 1.1em; }
             .coming-soon-text { font-size: 1.3em; }
 
             .input-group {
@@ -512,7 +512,6 @@
             .header-logo { max-width: 200px; }
             .loader-content .logo-text { font-size: 1.8em; }
             .coming-soon-text { font-size: 1.1em; letter-spacing: 1.5px; }
-            header .tagline { font-size: 1em; }
 
             .input-group input[type="email"],
             .input-group button {
@@ -591,9 +590,9 @@
     <!-- Bottom Bar -->
     <div class="bottom-bar" id="bottom-bar-content">
         <a href="tel:+919831955741" class="contact-item phone-number">
-            <i class="fas fa-phone-alt icon"></i>9831955741
+            <i class="fas fa-phone-alt fa-flip-horizontal icon"></i>9831955741
         </a>
-        <p class="quote-text">insight-within-sight.</p>
+        <p class="quote-text">insight-within-sight</p>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@thedayread.in&su=Hello%20There&body=I%20would%20like%20to%20talk%20about..." target="_blank" class="contact-item email-address">
             <i class="fas fa-envelope icon"></i>@thedayread.in
         </a>
@@ -617,6 +616,12 @@
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
                 mainContent.style.display = 'block';
+                // Ensure content animates in after display: block
+                // The fadeInContent animation is already set in CSS and should trigger.
+                // If an explicit opacity transition is desired on top of the animation:
+                // mainContent.style.opacity = '0';
+                // void mainContent.offsetWidth;
+                // setTimeout(() => { mainContent.style.opacity = '1'; }, 50);
             }, 800);
         }, 2500);
 
@@ -634,7 +639,6 @@
                 subscribeMessage.style.color = 'var(--primary-accent)';
                 emailInput.value = '';
                 console.log(`Subscribed: ${email}`);
-                // Consider actually sending this email to a backend or service here
             }
             setTimeout(() => {
                 subscribeMessage.textContent = '';
@@ -660,7 +664,7 @@
             document.addEventListener('mousedown', () => {
                 customCursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
                 cursorRipple.style.animation = 'none';
-                void cursorRipple.offsetWidth; // Trigger reflow to restart animation
+                void cursorRipple.offsetWidth;
                 cursorRipple.style.animation = 'rippleEffect 0.5s ease-out';
             });
 
@@ -677,7 +681,7 @@
         } else {
             customCursor.style.display = 'none';
             cursorRipple.style.display = 'none';
-            document.body.style.cursor = 'auto'; // Restore default cursor for touch devices
+            document.body.style.cursor = 'auto';
         }
 
         // --- Touch Interaction Ripple for mobile ---
@@ -689,11 +693,10 @@
 
                 let size = Math.max(document.body.clientWidth, document.body.clientHeight) * 2;
                 ripple.style.width = ripple.style.height = size + 'px';
-                // Ensure pageX and pageY are available on the touch event
                 if (e.touches && e.touches.length > 0) {
                     ripple.style.left = (e.touches[0].pageX - size / 2) + 'px';
                     ripple.style.top = (e.touches[0].pageY - size / 2) + 'px';
-                } else { // Fallback if touch coordinates are not directly on e
+                } else {
                     ripple.style.left = (e.pageX - size / 2) + 'px';
                     ripple.style.top = (e.pageY - size / 2) + 'px';
                 }
@@ -703,7 +706,6 @@
                 });
             }, {passive: true});
 
-            // Dynamically add styles for touch ripple to keep CSS cleaner
             const styleSheet = document.createElement("style");
             styleSheet.type = "text/css";
             styleSheet.innerText =
