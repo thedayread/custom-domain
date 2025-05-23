@@ -450,75 +450,68 @@
                 padding: 10px 15px;
                 gap: 8px;
             }
-
             .bottom-bar .quote-text {
                 order: 1;
                 margin: 5px 0;
                 width: auto;
             }
-
             .bottom-bar .phone-number {
                 order: 2;
             }
-
             .bottom-bar .email-address {
                 order: 3;
             }
-
             .bottom-bar .contact-item,
             .bottom-bar .quote-text {
                 font-size: 0.8em;
                 margin-bottom: 5px;
             }
-
             .bottom-bar .contact-item:last-child {
                 margin-bottom: 0;
             }
         }
-
-        @media (max-width: 768px) {
-            .header-logo { max-width: 240px; }
-            .loader-content .logo-text { font-size: 2.2em; }
-            .coming-soon-text { font-size: 1.3em; }
-
-            .input-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .input-group input[type="email"],
-            .input-group button {
-                border-radius: 25px;
-                width: 100%;
-                border-right: 1px solid var(--border-color);
-            }
-
-            .input-group input[type="email"]:focus,
-            .input-group input[type="email"]:hover {
-                border-right: 1px solid var(--primary-accent);
-            }
-
-            .social-media-section ul { gap: 10px; }
-            .social-media-section li .social-link {
-                padding: 10px 12px;
-                min-width: 44px;
-                height: 44px;
-            }
-
-            .social-media-section li .social-link i { font-size: 1.4em; }
-        }
-
-        @media (max-width: 480px) {
-            .header-logo { max-width: 200px; }
-            .loader-content .logo-text { font-size: 1.8em; }
-            .coming-soon-text { font-size: 1.1em; letter-spacing: 1.5px; }
-
-            .input-group input[type="email"],
-            .input-group button {
-                font-size: 0.9em;
-                padding: 10px 18px;
-            }
-        }
+       @media (max-width: 768px) {
+            .header-logo { max-width: 140px; }
+            .loader-content .logo-text { font-size: 2.2em; }
+            .coming-soon-text { font-size: 3.5em; }
+            .input-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+           
+            .input-group input[type="email"],
+            .input-group button {
+                border-radius: 25px;
+                width: 100%;
+                border-right: 1px solid var(--border-color);
+            }
+           
+            .input-group input[type="email"]:focus,
+            .input-group input[type="email"]:hover {
+                border-right: 1px solid var(--primary-accent);
+            }
+           
+            .social-media-section ul { gap: 10px; }
+            .social-media-section li .social-link {
+                padding: 10px 12px;
+                min-width: 44px;
+                height: 44px;
+            }
+           
+            .social-media-section li .social-link i { font-size: 1.4em; }
+        }
+        
+        @media (max-width: 480px) {
+            .header-logo { max-width: 90px; }
+            .loader-content .logo-text { font-size: 1.8em; }
+            .coming-soon-text { font-size: 2em; letter-spacing: 1.5px; }
+            .input-group input[type="email"],
+            .input-group button {
+                font-size: 0.9em;
+                padding: 12px 18px;
+            }
+        }
+        
     </style>
 </head>
 <body>
